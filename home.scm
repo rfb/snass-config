@@ -13,16 +13,29 @@
 (home-environment
   ;; Below is the list of packages that will show up in your
   ;; Home profile, under ~/.guix-home/profile.
-  (packages (specifications->packages (list "google-cloud-sdk"
-                                            "go"
+  (packages (specifications->packages (list "alsa-utils"
+                                            "chezmoi"
+                                            "clojure"
+                                            "clojure-tools"
                                             "docker"
-                                            "pinentry"
-                                            "gnupg"
+                                            "firefox"
+                                            "font-borg-sans-mono"
                                             "git"
-                                            "password-store"
-                                            "lxterminal"
+                                            "gnupg"
+                                            "go"
+                                            "google-cloud-sdk"
                                             "icecat"
-                                            "neovim")))
+                                            "kitty"
+                                            "lxterminal"
+                                            "neovim"
+                                            "neovim-packer"
+                                            "openjdk"
+                                            "password-store"
+                                            "pavucontrol"
+                                            "pinentry"
+                                            "postgresql"
+                                            "python"
+                                            "slock")))
 
   ;; Below is the list of Home services.  To search for available
   ;; services, run 'guix home search KEYWORD' in a terminal.
@@ -33,9 +46,5 @@
                               ("ip" . "ip -color=auto")
                               ("ll" . "ls -l")
                               ("ls" . "ls -p --color=auto")))
-                   (bashrc (list (local-file
-                                  "/home/rfb/source/guix-config/.bashrc"
-                                  "bashrc")))
-                   (bash-profile (list (local-file
-                                        "/home/rfb/source/guix-config/.bash_profile"
-                                        "bash_profile"))))))))
+                   (bashrc (list (local-file "./bashrc" "bashrc")))
+                   (bash-profile (list (local-file "./bash_profile" "bash_profile"))))))))
