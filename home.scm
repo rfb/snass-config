@@ -5,6 +5,7 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (use-modules (gnu home)
+             (gnu home services)
              (gnu packages)
              (gnu services)
              (guix gexp)
@@ -40,11 +41,15 @@
   ;; Below is the list of Home services.  To search for available
   ;; services, run 'guix home search KEYWORD' in a terminal.
   (services
-   (list (service home-bash-service-type
+   (list
+     (simple-service 'personal-env-variable-service
+                     home-environment-variables-service-type
+                     '(("EDITOR" . "nvim")))
+     (service home-bash-service-type
                   (home-bash-configuration
                    (aliases '(("grep" . "grep --color=auto")
                               ("ip" . "ip -color=auto")
                               ("ll" . "ls -l")
                               ("ls" . "ls -p --color=auto")))
-                   (bashrc (list (local-file "./bashrc" "bashrc")))
-                   (bash-profile (list (local-file "./bash_profile" "bash_profile"))))))))
+                   (bashrc (list (local-file "./bashrc")))
+                   (bash-profile (list (local-file "./bash_profile"))))))))

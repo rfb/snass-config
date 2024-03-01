@@ -60,7 +60,9 @@ EndSection")
           (extra-config
             (list add-click-finger-click-method))))
       (udev-rules-service 'fido2 libfido2 #:groups '("plugdev"))
-      (service tlp-service-type)
+      (service tlp-service-type
+               (tlp-configuration
+                 (cpu-scaling-governor-on-ac (list "powersave"))))
       (service thermald-service-type)
       (modify-services
         %desktop-services
