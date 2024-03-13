@@ -62,10 +62,15 @@ EndSection")
       (udev-rules-service 'fido2 libfido2 #:groups '("plugdev"))
       (service tlp-service-type
                (tlp-configuration
-                 (cpu-scaling-governor-on-ac (list "powersave"))))
+                 (energy-perf-policy-on-ac "powersave")
+                 (cpu-scaling-governor-on-ac (list "powersave"))
+                 (cpu-scaling-governor-on-bat (list "powersave"))))
       (service thermald-service-type)
       (modify-services
         %desktop-services
+        (elogind-service-type
+          config => (elogind-configuration
+                      (suspend-mode (list "deep"))))
         (guix-service-type
           config => (guix-configuration
                       (inherit config)

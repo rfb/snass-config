@@ -9,47 +9,62 @@
              (gnu packages)
              (gnu services)
              (guix gexp)
-             (gnu home services shells))
+             (gnu home services shells)
+             (gnu home services dotfiles))
 
 (home-environment
-  ;; Below is the list of packages that will show up in your
-  ;; Home profile, under ~/.guix-home/profile.
-  (packages (specifications->packages (list "alsa-utils"
-                                            "chezmoi"
-                                            "clojure"
-                                            "clojure-tools"
-                                            "docker"
-                                            "firefox"
-                                            "font-borg-sans-mono"
-                                            "git"
-                                            "gnupg"
-                                            "go"
-                                            "google-cloud-sdk"
-                                            "icecat"
-                                            "kitty"
-                                            "lxterminal"
-                                            "neovim"
-                                            "neovim-packer"
-                                            "openjdk"
-                                            "password-store"
-                                            "pavucontrol"
-                                            "pinentry"
-                                            "postgresql"
-                                            "python"
-                                            "slock")))
+ ;; Below is the list of packages that will show up in your
+ ;; Home profile, under ~/.guix-home/profile.
+ (packages (specifications->packages (list "alsa-utils"
+                                           "curl"
+                                           "docker"
+                                           "emacs"
+                                           "firefox"
+                                           "font-borg-sans-mono"
+                                           "git"
+                                           "gnucash"
+                                           "gnupg"
+                                           "go"
+                                           "google-chrome-stable"
+                                           "google-cloud-sdk"
+                                           "google-cloud-sdk"
+                                           "gpodder"
+                                           "guvcview"
+                                           "jq"
+                                           "kitty"
+                                           "lynx"
+                                           "make"
+                                           "neovim"
+                                           "neovim-packer"
+                                           "password-store"
+                                           "pavucontrol"
+                                           "pinentry"
+                                           "postgresql"
+                                           "pwgen"
+                                           "ripgrep"
+                                           "shotwell"
+                                           "slock"
+                                           "slock"
+                                           "unzip"
+                                           "xss-lock"
+                                           "zbar")))
 
-  ;; Below is the list of Home services.  To search for available
-  ;; services, run 'guix home search KEYWORD' in a terminal.
-  (services
-   (list
-     (simple-service 'personal-env-variable-service
-                     home-environment-variables-service-type
-                     '(("EDITOR" . "nvim")))
-     (service home-bash-service-type
-                  (home-bash-configuration
-                   (aliases '(("grep" . "grep --color=auto")
-                              ("ip" . "ip -color=auto")
-                              ("ll" . "ls -l")
-                              ("ls" . "ls -p --color=auto")))
-                   (bashrc (list (local-file "./bashrc")))
-                   (bash-profile (list (local-file "./bash_profile"))))))))
+ ;; Below is the list of Home services.  To search for available
+ ;; services, run 'guix home search KEYWORD' in a terminal.
+ (services
+  (list
+   (simple-service 'personal-env-variable-service
+                   home-environment-variables-service-type
+                   '(("EDITOR" . "nvim")))
+   (service home-dotfiles-service-type
+            (home-dotfiles-configuration
+             (layout 'stow)
+             (directories (list "./dotfiles"))))
+   (service home-bash-service-type
+            (home-bash-configuration
+             (aliases '(("grep" . "grep --color=auto")
+                        ("ip" . "ip -color=auto")
+                        ("ll" . "ls -l")
+                        ("ls" . "ls -p --color=auto")))
+             (bashrc (list (local-file "./bashrc")))
+             (bash-profile (list (local-file "./bash_profile"))))))))
